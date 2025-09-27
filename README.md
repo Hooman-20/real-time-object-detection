@@ -65,6 +65,17 @@ Detects objects such as person, car, dog, laptop, bottle, etc.
 Outputs bounding boxes with class names and confidence scores.
 
 ---
+
+## Example Output
+
+Here’s an example of the detection result:
+
+
+<img width="625" height="472" alt="Screenshot 2025-09-27 164523" src="https://github.com/user-attachments/assets/a406bc26-c6ce-41a6-ab7d-2fdaa13421ec" />
+
+
+
+---
 ## Tech Stack
 
 NVIDIA Triton Inference Server
