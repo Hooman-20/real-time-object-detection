@@ -13,6 +13,7 @@ TRITON_URL  = "localhost:8000"      # Triton server address (no "http://")
 MODEL_NAME  = "ssd_mobilenet_v1"
 IMG_PATH    = "test.jpg"            # replace with your own image
 CONF_THRESH = 0.30                  # detection threshold
+NMS_THRESH  = 0.5                   # overlap threshold for NMS
 
 
 def main():
@@ -60,21 +61,31 @@ def main():
     classes = result.as_numpy("detection_classes")
     num     = int(result.as_numpy("num_detections")[0])
 
-    out = img_bgr.copy()
+    # Collect for NMS
+    bboxes, confs, class_ids = [], [], []
     for i in range(num):
         s = float(scores[0, i])
         if s < CONF_THRESH:
             continue
         y1, x1, y2, x2 = boxes[0, i]
-        x1i, y1i = int(x1 * w0), int(y1 * h0)
-        x2i, y2i = int(x2 * w0), int(y2 * h0)
+        bboxes.append([int(x1 * w0), int(y1 * h0), int((x2 - x1) * w0), int((y2 - y1) * h0)])
+        confs.append(s)
+        class_ids.append(int(classes[0, i]))
 
-        cls_id = int(classes[0, i])
-        label = COCO_LABELS[cls_id] if 0 <= cls_id < len(COCO_LABELS) else f"id:{cls_id}"
+    indices = cv2.dnn.NMSBoxes(bboxes, confs, CONF_THRESH, NMS_THRESH)
 
-        cv2.rectangle(out, (x1i, y1i), (x2i, y2i), (0, 255, 0), 2)
-        cv2.putText(out, f"{label} {s:.2f}", (x1i, max(0, y1i - 5)),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
+    out = img_bgr.copy()
+    if len(indices) > 0:
+        for idx in indices.flatten():
+            x, y, w, h = bboxes[idx]
+            s = confs[idx]
+            cls_id = class_ids[idx]
+
+            label = COCO_LABELS[cls_id] if 0 <= cls_id < len(COCO_LABELS) else f"id:{cls_id}"
+
+            cv2.rectangle(out, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            cv2.putText(out, f"{label} {s:.2f}", (x, max(0, y - 10)),
+                        cv2.FONT_HERSHEY_SIMPLEX, 4.0, (0, 255, 0), 4)
 
     # Show + save
     cv2.imshow("Detections", out)
