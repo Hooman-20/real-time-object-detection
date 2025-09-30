@@ -43,16 +43,16 @@ pip install -r requirements.txt
 3. Run Detection
 
 On an image:
-
+```
 python detect.py
-
+```
 
 Update IMG_PATH in the script to your test image.
 
 Live webcam:
-
+```
 python detect_cam.py
-
+```
 
 Press q to quit.
 
