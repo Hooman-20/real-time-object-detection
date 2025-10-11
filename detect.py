@@ -4,6 +4,7 @@ import time
 import numpy as np
 import cv2
 
+
 from tritonclient.http import InferenceServerClient, InferInput
 from tritonclient.utils import InferenceServerException
 from coco_labels_91 import COCO_LABELS  # labels file must be next to this script
