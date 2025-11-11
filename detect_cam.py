@@ -10,7 +10,6 @@ TRITON_URL  = "localhost:8000"
 MODEL_NAME  = "ssd_mobilenet_v1"
 CONF_THRESH = 0.30
 
-
 def main():
     # Connect to Triton
     try:
