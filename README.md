@@ -13,6 +13,7 @@ The model used here is **SSD MobileNet v1** (trained on COCO), and I tested it b
 - Shows bounding boxes, class labels, and confidence scores
 - Uses Triton with TensorRT + CUDA for GPU acceleration
 
+
 ---
 
 ## Project Files
