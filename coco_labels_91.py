@@ -17,3 +17,4 @@ COCO_LABELS = [
     "microwave","oven","toaster","sink","refrigerator",
     "book","clock","vase","scissors","teddy bear","hair drier","toothbrush"
 ]
+
