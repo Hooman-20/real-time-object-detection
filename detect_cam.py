@@ -6,6 +6,7 @@ from tritonclient.utils import InferenceServerException
 from coco_labels_91 import COCO_LABELS
 
 
+
 # Configuration
 TRITON_URL  = "localhost:8000"
 MODEL_NAME  = "ssd_mobilenet_v1"
