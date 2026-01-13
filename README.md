@@ -5,6 +5,7 @@ The model used here is **SSD MobileNet v1** (trained on COCO), and I tested it b
 
 ---
 
+
 ## Features
 - Runs object detection in real time (SSD MobileNet v1, COCO dataset)
 - Works on both:
